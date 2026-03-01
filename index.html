@@ -9,6 +9,8 @@
 </head>
 <body>
 
+    <datalist id="inventory-options"></datalist>
+
     <header>
         <h1>مجمع احمد فرحان المتميز</h1>
     </header>
@@ -34,17 +36,17 @@
 
         <section id="tab-sales" class="tab-content">
             <div class="top-actions">
-                <button class="btn-primary" onclick="openModal('modal-direct-sale')"><i class="fas fa-shopping-cart"></i> بيع مباشر</button>
+                <button class="btn-primary" onclick="openDirectSaleModal()"><i class="fas fa-shopping-cart"></i> بيع مباشر</button>
             </div>
             <div id="sales-list" class="list-container">
-                <p class="empty-msg">الناتج سيظهر هنا بالدينار العراقي...</p>
+                <p class="empty-msg">اضغط على بيع مباشر للبدء...</p>
             </div>
         </section>
 
         <section id="tab-statistics" class="tab-content">
-            <h2 class="section-title">إحصائيات الأرباح (12 شهر)</h2>
+            <h2 class="section-title">إحصائيات الأرباح والمبيعات</h2>
             <div id="statistics-list" class="list-container">
-                <p class="empty-msg">قريباً: سيتم عرض المسدد والمباع والباقي هنا.</p>
+                <p class="empty-msg">لا توجد مبيعات حتى الآن.</p>
             </div>
         </section>
 
@@ -109,10 +111,61 @@
             <div class="balance-card">الباقي: <span id="detail-cust-balance">0</span> د.ع</div>
             
             <div class="action-buttons">
-                <button class="btn-primary" onclick="alert('واجهة إضافة الدين قيد التطوير')">دين <i class="fas fa-plus-circle"></i></button>
-                <button class="btn-success" onclick="alert('واجهة التسديد قيد التطوير')">تسديد <i class="fas fa-hand-holding-usd"></i></button>
+                <button class="btn-primary" onclick="openDebtModal()">دين <i class="fas fa-plus-circle"></i></button>
+                <button class="btn-success" onclick="openPaymentModal()">تسديد <i class="fas fa-hand-holding-usd"></i></button>
             </div>
+        </div>
+    </div>
+
+    <div id="modal-debt" class="modal">
+        <div class="modal-content">
+            <h3>إضافة دين جديد</h3>
+            <div id="debt-items-container">
+                </div>
+            <button class="btn-secondary" onclick="addItemRow('debt-items-container')" style="margin-top: 10px;">+ إضافة مادة</button>
+            <input type="date" id="debt-date" readonly style="margin-top: 10px;">
+            <div class="modal-actions">
+                <button class="btn-primary" onclick="saveDebt()">حفظ ومشاركة واتساب</button>
+                <button class="btn-danger" onclick="closeModal('modal-debt')">إلغاء</button>
             </div>
+        </div>
+    </div>
+
+    <div id="modal-payment" class="modal">
+        <div class="modal-content">
+            <h3>تسديد دفعة</h3>
+            <div class="balance-card">الباقي: <span id="payment-current-balance"></span> د.ع</div>
+            <input type="number" id="payment-amount" placeholder="المبلغ المراد تسديده (د.ع)">
+            <input type="text" id="payment-note" placeholder="ملاحظة">
+            <div class="modal-actions">
+                <button class="btn-success" onclick="savePayment()">حفظ ومشاركة واتساب</button>
+                <button class="btn-danger" onclick="closeModal('modal-payment')">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-direct-sale" class="modal full-modal">
+        <div class="modal-content full-content">
+            <div class="top-actions">
+                <button class="btn-danger" onclick="closeModal('modal-direct-sale')"><i class="fas fa-arrow-right"></i> رجوع</button>
+            </div>
+            <h3>بيع مباشر</h3>
+            <input type="text" id="sale-name" placeholder="اسم الشخص">
+            <div class="phone-input">
+                <span class="country-code">+964</span>
+                <input type="number" id="sale-phone" placeholder="7..." style="width: 100%;">
+            </div>
+            
+            <div id="sale-items-container">
+                </div>
+            <button class="btn-secondary" onclick="addItemRow('sale-items-container')" style="margin-top: 10px;">+ إضافة مادة</button>
+            
+            <div class="balance-card" style="margin-top: 15px;">الناتج: <span id="sale-total">0</span> د.ع</div>
+            
+            <div class="modal-actions">
+                <button class="btn-primary" onclick="saveDirectSale()">حفظ الفاتورة</button>
+            </div>
+        </div>
     </div>
 
     <script src="app.js"></script>
