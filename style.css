@@ -195,3 +195,16 @@ button {
 .modal-actions button { flex: 1; }
 .action-buttons { display: flex; gap: 10px; }
 .action-buttons button { flex: 1; }
+
+/* إضافات جديدة لصفوف المواد في الدين والبيع */
+.item-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+.item-row input {
+    margin-bottom: 0;
+}
+.item-name-input { flex: 2; }
+.item-qty-input { flex: 1; }
