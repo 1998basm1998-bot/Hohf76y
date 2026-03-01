@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>مجمع احمد فرحان المتميز</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <h1>مجمع احمد فرحان المتميز</h1>
+    </header>
+
+    <main id="app-content">
+        
+        <section id="tab-inventory" class="tab-content active">
+            <div class="top-actions">
+                <button class="btn-primary" onclick="openModal('modal-add-item')"><i class="fas fa-plus"></i> إضافة منتج</button>
+            </div>
+            <div id="inventory-list" class="list-container">
+                </div>
+        </section>
+
+        <section id="tab-customers" class="tab-content">
+            <div class="top-actions">
+                <input type="text" id="search-customer" placeholder="بحث عن زبون..." onkeyup="searchCustomers()">
+                <button class="btn-primary" onclick="openModal('modal-add-customer')"><i class="fas fa-user-plus"></i> إضافة زبون</button>
+            </div>
+            <div id="customers-list" class="list-container">
+                </div>
+        </section>
+
+        <section id="tab-sales" class="tab-content">
+            <div class="top-actions">
+                <button class="btn-primary" onclick="openModal('modal-direct-sale')"><i class="fas fa-shopping-cart"></i> بيع مباشر</button>
+            </div>
+            <div id="sales-list" class="list-container">
+                <p class="empty-msg">الناتج سيظهر هنا بالدينار العراقي...</p>
+            </div>
+        </section>
+
+        <section id="tab-statistics" class="tab-content">
+            <h2 class="section-title">إحصائيات الأرباح (12 شهر)</h2>
+            <div id="statistics-list" class="list-container">
+                <p class="empty-msg">قريباً: سيتم عرض المسدد والمباع والباقي هنا.</p>
+            </div>
+        </section>
+
+        <section id="tab-settings" class="tab-content">
+            <div class="settings-container">
+                <button class="btn-secondary" onclick="exportData()"><i class="fas fa-download"></i> تنزيل نسخة احتياطية</button>
+                <label class="btn-secondary file-upload">
+                    <i class="fas fa-upload"></i> رفع نسخة احتياطية
+                    <input type="file" id="import-file" accept=".json" onchange="importData(event)" style="display: none;">
+                </label>
+            </div>
+        </section>
+
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item active" onclick="switchTab('inventory', this)"><i class="fas fa-boxes"></i><span>المخزون</span></a>
+        <a href="#" class="nav-item" onclick="switchTab('customers', this)"><i class="fas fa-users"></i><span>الزبائن</span></a>
+        <a href="#" class="nav-item" onclick="switchTab('sales', this)"><i class="fas fa-cash-register"></i><span>البيع</span></a>
+        <a href="#" class="nav-item" onclick="switchTab('statistics', this)"><i class="fas fa-chart-line"></i><span>الإحصائيات</span></a>
+        <a href="#" class="nav-item" onclick="switchTab('settings', this)"><i class="fas fa-cog"></i><span>الإعدادات</span></a>
+    </nav>
+
+    <div id="modal-add-item" class="modal">
+        <div class="modal-content">
+            <h3>إضافة/تعديل منتج</h3>
+            <input type="hidden" id="item-id">
+            <input type="text" id="item-name" placeholder="اسم السلعة">
+            <input type="number" id="item-buy-price" placeholder="سعر الشراء (د.ع)">
+            <input type="number" id="item-sell-price" placeholder="سعر البيع (د.ع)">
+            <input type="number" id="item-qty" placeholder="الكمية">
+            <div class="modal-actions">
+                <button class="btn-primary" onclick="saveItem()">حفظ</button>
+                <button class="btn-danger" onclick="closeModal('modal-add-item')">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-add-customer" class="modal">
+        <div class="modal-content">
+            <h3>إضافة/تعديل زبون</h3>
+            <input type="hidden" id="cust-id">
+            <input type="text" id="cust-name" placeholder="اسم الزبون">
+            <div class="phone-input">
+                <span class="country-code">+964</span>
+                <input type="number" id="cust-phone" placeholder="7..." style="width: 100%;">
+            </div>
+            <input type="text" id="cust-address" placeholder="العنوان">
+            <div class="modal-actions">
+                <button class="btn-primary" onclick="saveCustomer()">حفظ</button>
+                <button class="btn-danger" onclick="closeModal('modal-add-customer')">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-customer-details" class="modal full-modal">
+        <div class="modal-content full-content">
+            <div class="top-actions">
+                <button class="btn-danger" onclick="closeModal('modal-customer-details')"><i class="fas fa-arrow-right"></i> رجوع</button>
+            </div>
+            <h3 id="detail-cust-name">اسم الزبون</h3>
+            <div class="balance-card">الباقي: <span id="detail-cust-balance">0</span> د.ع</div>
+            
+            <div class="action-buttons">
+                <button class="btn-primary" onclick="alert('واجهة إضافة الدين قيد التطوير')">دين <i class="fas fa-plus-circle"></i></button>
+                <button class="btn-success" onclick="alert('واجهة التسديد قيد التطوير')">تسديد <i class="fas fa-hand-holding-usd"></i></button>
+            </div>
+            </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
